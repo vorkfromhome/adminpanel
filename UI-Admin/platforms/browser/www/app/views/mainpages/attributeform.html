@@ -1,0 +1,75 @@
+<div class="block-center mt-xl wd-xl">
+<!-- START panel-->
+<div class="panel panel-dark panel-flat" ng-controller="addattributeController as form">
+  <div class="panel-heading text-center"> 
+  <h3>{{form.producttitle}}</h3>
+  </div>
+  <div class="panel-body">
+    <div class="col-lg-12">
+      <div >
+       <form class="form-validate form-horizontal" name="form.formValidate" ng-submit="form.submitForm()" novalidate=" ">
+       
+          <div class="col-xs-12">
+          <div class="form-group"  ng-class="{ 'has-error' : form.validateInput('attributegrandparent', 'required')}">
+            <label>Attribute Grandparent</label>
+            <select class="form-control inputborder" name="attributegrandparent" ng-model="form.attributegrandparent" required >
+              <option value="0">No Grandparent</option>
+              <option ng-repeat="x in names">{{x}}</option>
+            </select>
+			<p ng-show="form.validateInput('attributegrandparent', 'required')" class="help-block">This field is required.</p>
+          </div>
+		  </div>
+           
+          <div class="col-xs-12">
+          <div class="form-group"  ng-class="{ 'has-error' : form.validateInput('attributeparent', 'required')}">
+            <label>Attribute Parent</label>
+            <select class="form-control inputborder" name="attributeparent" ng-model="form.attributeparent" required >
+              <option value="0">No Parent</option>
+              <option ng-repeat="x in names">{{x}}</option>
+            </select>
+			<p ng-show="form.validateInput('attributeparent', 'required')" class="help-block">This field is required.</p>
+          </div>
+		  </div>
+           
+            <div class="col-xs-12"> 
+              <!-- Product information -->
+              <div class="form-group" ng-class="{ 'has-error' : form.validateInput('attributerole', 'required')}">
+                <label>Role</label>
+                <input type="text" name="attributerole" class="form-control inputborder" placeholder="Enter Your attributerole" ng-model="form.attributerole" ng-pattern="/[A-Za-z]$/" required />
+                <p ng-show="form.validateInput('attributerole', 'required')" class="help-block">This field is required.</p>
+				<p ng-show="form.validateInput('attributerole', 'pattern')" class="help-block">This field must contain only digits</p>
+              </div>
+            </div>
+           
+       
+           
+         <!-- Status --> 	
+		<div class="col-xs-12">
+          <div class="form-group"  ng-class="{ 'has-error' : form.validateInput('activestatus', 'required')}">
+            <label>Status</label>
+            <select class="form-control inputborder" name="activestatus" ng-model="form.activestatus" required >
+                <option value="">Select status</option>
+              <option value="1">Active</option>
+              <option value="0">InActive</option>
+              <option value="-1">Deleted</option>
+            </select>
+			<p ng-show="form.validateInput('activestatus', 'required')" class="help-block">This field is required.</p>
+          </div>
+		  </div>
+		
+
+<div class="col-xs-6 text-right">
+		<button class="btn btn-success" type="submit"><strong>Save</strong></button>
+    </div>
+<div class="col-xs-6 text-right">
+         <button class="btn btn-danger"><strong>cancel</strong></button>
+			</div>
+       </button>
+			</div>
+      </form>
+    </div>
+    </div>
+  </div>
+  <!-- END panel--> 
+</div>
+</div>

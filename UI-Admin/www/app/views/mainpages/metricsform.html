@@ -1,0 +1,79 @@
+<div class="block-center mt-xl wd-xl">
+<!-- START panel-->
+<div class="panel panel-dark panel-flat" ng-controller="addmetricsController as form">
+  <div class="panel-heading text-center"> 
+  <h3>{{form.producttitle}}</h3>
+  </div>
+  <div class="panel-body">
+    <div class="col-lg-12">
+      <div >
+       <form class="form-validate form-horizontal" name="form.formValidate" ng-submit="form.submitForm()" novalidate=" ">
+       
+           
+           <div class="col-xs-12"> 
+              <!-- Product information -->
+              <div class="form-group" ng-class="{ 'has-error' : form.validateInput('name', 'required')}">
+                <label>Metric</label>
+                <input type="text" name="name" class="form-control inputborder" placeholder="Enter Your name" ng-model="form.name" ng-pattern="/[A-Za-z]$/" required />
+                <p ng-show="form.validateInput('name', 'required')" class="help-block">This field is required.</p>
+				<p ng-show="form.validateInput('name', 'pattern')" class="help-block">This field must contain only charector</p>
+              </div>
+            </div>
+           
+           
+                             <div class="col-xs-12"> 
+              <!-- Product information -->
+              <div class="form-group" ng-class="{ 'has-error' : form.validateInput('symbol', 'required')}">
+                <label>symbol</label>
+                <input type="text" name="symbol" class="form-control inputborder" placeholder="Enter Your name" ng-model="form.symbol" ng-pattern="/[A-Za-z]$/" required />
+                <p ng-show="form.validateInput('symbol', 'required')" class="help-block">This field is required.</p>
+				<p ng-show="form.validateInput('symbol', 'pattern')" class="help-block">This field must contain only charector</p>
+              </div>
+            </div>
+           
+          <div class="col-xs-12">
+          <div class="form-group"  ng-class="{ 'has-error' : form.validateInput('baseunit', 'required')}">
+            <label>Base</label>
+            <select class="form-control inputborder" name="baseunit" ng-model="form.baseunit" required >
+                <option value="">category</option>
+              <option value="1">category 1</option>
+              <option value="2">category 2</option>
+            </select>
+			<p ng-show="form.validateInput('baseunit', 'required')" class="help-block">This field is required.</p>
+          </div>
+		  </div>
+           
+ 
+
+ 
+           
+           
+
+           
+                <div class="col-xs-12"> 
+              <!-- Product information -->
+              <div class="form-group" ng-class="{ 'has-error' : form.validateInput('multiple', 'required')}">
+                <label>Multiple</label>
+                <input type="text" name="multiple"  class="form-control inputborder" placeholder="Enter Your value" ng-model="form.multiple" ng-pattern="/[A-Za-z]$/" required />
+                <p ng-show="form.validateInput('multiple', 'required')" class="help-block">This field is required.</p>
+				<p ng-show="form.validateInput('multiple', 'pattern')" class="help-block">This field must contain only charector</p>
+              </div>
+            </div>
+           
+           
+
+
+
+<div class="col-xs-6 text-right">
+		<button class="btn btn-success" type="submit"><strong>Save</strong></button>
+    </div>
+<div class="col-xs-6 text-right">
+         <button class="btn btn-danger"><strong>cancel</strong></button>
+			</div>
+      </form>
+    </div>
+    </div>
+  </div>
+  <!-- END panel--> 
+</div>
+</div>
