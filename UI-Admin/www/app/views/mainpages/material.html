@@ -8,7 +8,11 @@
             <button class="btn btn-labeled btn-success" type="button" ng-click="material.bulkupdate()"> <span class="btn-label"><i class="fa fa-plus"></i>
                </span>Bulkupdate</button>
         </div>
+        <div>
         <div class="col-lg-12" ng-controller="DataTableController as table2">
+             <div>
+                    <div uib-alert="uib-alert" ng-repeat="alert in material.alerts" ng-class="'alert-' + (alert.type || 'warning')" close="material.closeAlert($index)">{{alert.msg}}</div>
+                </div>
             <!-- Zero Configuration-->
             <div class="panel panel-default">
                 <div class="panel-body">
@@ -34,7 +38,7 @@
                                 <td>{{x.activestatus == "1" ? "Active" : x.activestatus == "0" ? "Inactive" : "Deleted"}}</td>
                                 <td>
                                     <button class="btn btn-sm btn-warning" type="button" ng-click="material.editmaterial(x._id)"> <em class="fa fa-edit"></em> </button>
-                                    <button class="btn btn-sm btn-danger" type="button" ng-click="material.editmaterial(x._id)"> <em class="fa fa-trash-o"></em> </button>
+                                    <button class="btn btn-sm btn-danger" type="button" ng-click="material.deleterow(x._id)" > <em class="fa fa-trash-o"></em> </button>
                                 </td>
                             </tr>
                         </tbody>
@@ -42,6 +46,7 @@
                 </div>
             </div>
         </div>
+            </div>
     </div>
 </div>
 <!-- end Main panels-->

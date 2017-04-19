@@ -1,0 +1,51 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="col-lg-12 text-right" style="padding-bottom: 10px;">
+            <button class="btn btn-labeled btn-success" type="button" ng-click="user.adduser()"> <span class="btn-label"><i class="fa fa-plus"></i>
+               </span>add</button>
+            <button class="btn btn-labeled btn-success" type="button" ng-click="user.adduser()"> <span class="btn-label"><i class="fa fa-plus"></i>
+               </span>conversation</button>
+        </div>
+        <div class="col-lg-12" ng-controller="DataTableController as table2">
+            <!-- Zero Configuration-->
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table class="row-border hover" datatable="ng" dt-options="table2.dtOptions" dt-column-defs="table2.dtColumnDefs">
+                        <thead>
+                            <tr>
+                                <th>user id</th>
+                                <th>name</th>
+                                <th>mobile</th>
+                                <th>email</th>
+                                <th>password</th>
+                                <th>pin</th>
+                                <th>modifyon</th>
+                                <th>modifyby</th>
+                                <th>status</th>
+                                <th>action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="x in user.productdata">
+                                <td>{{x.userid}}</td>
+                                <td>{{x.firstname}} {{x.lastname}}</td>
+                                <td>{{x.mobile}}</td>
+                                <td>{{x.email}}</td>
+                                <td>{{x.password}}</td>
+                                <td>{{x.pin}}</td>
+                                <td>{{x.modifiedon}}</td>
+                                <td>{{x.modifiedby}}</td>
+                                <td>{{x.activestatus == "1" ? "Active" : x.activestatus == "0" ? "Inactive" : "Deleted"}}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-warning" type="button" ng-click="user.edituser(x._id)"> <em class="fa fa-edit"></em> </button>
+                                    <button class="btn btn-sm btn-danger" type="button" ng-click="user.deleterow(x._id)"> <em class="fa fa-trash-o"></em> </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end Main panels-->

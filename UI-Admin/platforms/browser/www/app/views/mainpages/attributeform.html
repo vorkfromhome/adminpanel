@@ -13,8 +13,8 @@
           <div class="form-group"  ng-class="{ 'has-error' : form.validateInput('attributegrandparent', 'required')}">
             <label>Attribute Grandparent</label>
             <select class="form-control inputborder" name="attributegrandparent" ng-model="form.attributegrandparent" required >
-              <option value="0">No Grandparent</option>
-              <option ng-repeat="x in names">{{x}}</option>
+              <option ng-disabled="form.attrgrd" value="0">No Grandparent</option>
+              <option ng-disabled="form.attrgrd" ng-repeat="x in form.mainroletypes" value="{{x.attributeroleid}}">{{x.attributerole}}</option>
             </select>
 			<p ng-show="form.validateInput('attributegrandparent', 'required')" class="help-block">This field is required.</p>
           </div>
@@ -24,8 +24,8 @@
           <div class="form-group"  ng-class="{ 'has-error' : form.validateInput('attributeparent', 'required')}">
             <label>Attribute Parent</label>
             <select class="form-control inputborder" name="attributeparent" ng-model="form.attributeparent" required >
-              <option value="0">No Parent</option>
-              <option ng-repeat="x in names">{{x}}</option>
+              <option ng-disabled="form.attrprt" value="0">No Parent</option>
+              <option ng-disabled="form.attrprt" ng-repeat="x in form.subroletypes" value="{{x.attributeroleid}}">{{x.attributerole}}</option>
             </select>
 			<p ng-show="form.validateInput('attributeparent', 'required')" class="help-block">This field is required.</p>
           </div>
@@ -34,7 +34,7 @@
             <div class="col-xs-12"> 
               <!-- Product information -->
               <div class="form-group" ng-class="{ 'has-error' : form.validateInput('attributerole', 'required')}">
-                <label>Role</label>
+                <label>Attribute Role</label>
                 <input type="text" name="attributerole" class="form-control inputborder" placeholder="Enter Your attributerole" ng-model="form.attributerole" ng-pattern="/[A-Za-z]$/" required />
                 <p ng-show="form.validateInput('attributerole', 'required')" class="help-block">This field is required.</p>
 				<p ng-show="form.validateInput('attributerole', 'pattern')" class="help-block">This field must contain only digits</p>

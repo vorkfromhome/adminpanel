@@ -320,17 +320,16 @@
         activate();
         ////////////////
         function activate() {
-            vm.open = function (size) {
+            vm.open = function (size, temp) {
                 var modalInstance = $uibModal.open({
-                    templateUrl: '/myModalContent.html'
+                    templateUrl: temp
                     , controller: ModalInstanceCtrl
                     , size: size
                 });
-                var state = $('#modal-state');
                 modalInstance.result.then(function () {
-                    state.text('Modal dismissed with OK status');
+                    // state.text('Modal dismissed with OK status');
                 }, function () {
-                    state.text('Modal dismissed with Cancel status');
+                    // state.text('Modal dismissed with Cancel status');
                 });
             };
             // Please note that $uibModalInstance represents a modal window (instance) dependency.
@@ -339,7 +338,8 @@
 
             function ModalInstanceCtrl($scope, $uibModalInstance) {
                 $scope.ok = function () {
-                    $uibModalInstance.close('closed');
+                    //$uibModalInstance.close('closed');
+                    $uibModalInstance.dismiss('cancel');
                 };
                 $scope.cancel = function () {
                     $uibModalInstance.dismiss('cancel');
@@ -5683,185 +5683,146 @@
         }
     }
 })();
-
 /**=========================================================
  * Wrapper directive for filetobeupload. 
  =========================================================*/
 (function () {
     'use strict';
     angular.module('app.filetobeupload').directive('fileModel', ['$parse', function ($parse) {
-    return {
-        restrict: 'A',
-        link: function(scope, element, attrs) {
-            var model = $parse(attrs.fileModel);
-            var modelSetter = model.assign;
-            
-            element.bind('change', function(){
-                scope.$apply(function(){
-                    modelSetter(scope, element[0].files[0]);
+        return {
+            restrict: 'A'
+            , link: function (scope, element, attrs) {
+                var model = $parse(attrs.fileModel);
+                var modelSetter = model.assign;
+                element.bind('change', function () {
+                    scope.$apply(function () {
+                        modelSetter(scope, element[0].files[0]);
+                    });
                 });
-            });
-        }
-    };
+            }
+        };
 }]);
 })();
-
 (function () {
     'use strict';
-    angular.module('app.filetobeupload').controller('attributebulkinsertcontroller', ['$scope','$http', function($scope, $http){
-    
-    $scope.uploadFile = function(){
-        var file = $scope.myFile;
-        var uploadUrl = "http://localhost:8000/uploadfile/attributebulkinsert";
-        this.filedata =[];
-        var fd = new FormData();
-        fd.append('file', file);
-        $http.post(uploadUrl, fd, {
-            transformRequest: angular.identity,
-            headers: {'Content-Type': undefined}
-        }).then(function (response) {
-            if(response.data.result.length!=0){
-                
-                var dataresult = encodeURIComponent(JSON.stringify(response.data.result));
-                console.log(dataresult);
-                
-            $http.get("http://localhost:3000/api/attributes/bulkcreateattribute?bulkdata="+dataresult+"&totlen=0&access_token=metricmangement").then(function (response) {
-                console.log(response.data);
+    angular.module('app.filetobeupload').controller('attributebulkinsertcontroller', ['$scope', '$http', function ($scope, $http) {
+        $scope.uploadFile = function () {
+            var file = $scope.myFile;
+            var uploadUrl = "http://localhost:8000/uploadfile/attributebulkinsert";
+            this.filedata = [];
+            var fd = new FormData();
+            fd.append('file', file);
+            $http.post(uploadUrl, fd, {
+                transformRequest: angular.identity
+                , headers: {
+                    'Content-Type': undefined
+                }
+            }).then(function (response) {
+                if (response.data.result.length != 0) {
+                    var dataresult = encodeURIComponent(JSON.stringify(response.data.result));
+                    //console.log(dataresult);
+                    $http.get("http://localhost:3000/api/attributes/bulkcreateattribute?bulkdata=" + dataresult + "&totlen=0&access_token=metricmangement").then(function (response) {
+                        console.log(response.data);
+                    });
+                }
             });
-            }
-        });
-    };
+        };
 }]);
-
 })();
-
-
-
-
-
 (function () {
     'use strict';
-    angular.module('app.filetobeupload').controller('attributebulkupdatecontroller', ['$scope','$http', function($scope, $http){
-    
-    $scope.uploadFile = function(){
-        var file = $scope.myFile;
-        var uploadUrl = "http://localhost:8000/uploadfile/attributebulkupdate";
-        this.filedata =[];
-        var fd = new FormData();
-        fd.append('file', file);
-        $http.post(uploadUrl, fd, {
-            transformRequest: angular.identity,
-            headers: {'Content-Type': undefined}
-        }).then(function (response) {
-            if(response.data.result.length!=0){
-                
-                var dataresult = encodeURIComponent(JSON.stringify(response.data.result));
-                console.log(dataresult);
-  
-            $http.get("http://localhost:3000/api/attributes/bulkupdateattribute?bulkdata="+dataresult+"&totlen=0&access_token=metricmangement").then(function (response) {
-                console.log(response.data);
+    angular.module('app.filetobeupload').controller('attributebulkupdatecontroller', ['$scope', '$http', function ($scope, $http) {
+        $scope.uploadFile = function () {
+            var file = $scope.myFile;
+            var uploadUrl = "http://localhost:8000/uploadfile/attributebulkupdate";
+            this.filedata = [];
+            var fd = new FormData();
+            fd.append('file', file);
+            $http.post(uploadUrl, fd, {
+                transformRequest: angular.identity
+                , headers: {
+                    'Content-Type': undefined
+                }
+            }).then(function (response) {
+                if (response.data.result.length != 0) {
+                    var dataresult = encodeURIComponent(JSON.stringify(response.data.result));
+                    console.log(dataresult);
+                    $http.get("http://localhost:3000/api/attributes/bulkupdateattribute?bulkdata=" + dataresult + "&totlen=0&access_token=metricmangement").then(function (response) {
+                        console.log(response.data);
+                    });
+                }
             });
-            }
-        });
-    };
+        };
 }]);
-
 })();
-
-
-
-
-
-
-
-
-
-
 (function () {
     'use strict';
-    angular.module('app.filetobeupload').controller('materialbulkinsertcontroller', ['$scope','$http', function($scope, $http){
-    
-    $scope.uploadFile = function(){
-        var file = $scope.myFile;
-        var uploadUrl = "http://localhost:8000/uploadfile/materialbulkinsert";
-        this.filedata =[];
-        var fd = new FormData();
-        fd.append('file', file);
-        $http.post(uploadUrl, fd, {
-            transformRequest: angular.identity,
-            headers: {'Content-Type': undefined}
-        }).then(function (response) {
-            if(response.data.result.length!=0){
-                
-                var dataresult = encodeURIComponent(JSON.stringify(response.data.result));
-                console.log(dataresult);
-               
-            $http.get("http://localhost:3000/api/materials/bulkcreatematerial?bulkdata="+dataresult+"&totlen=0&access_token=metricmangement").then(function (response) {
-                console.log(response.data);
+    angular.module('app.filetobeupload').controller('materialbulkinsertcontroller', ['$scope', '$http', function ($scope, $http) {
+        $scope.uploadFile = function () {
+            var file = $scope.myFile;
+            var uploadUrl = "http://localhost:8000/uploadfile/materialbulkinsert";
+            this.filedata = [];
+            var fd = new FormData();
+            fd.append('file', file);
+            $http.post(uploadUrl, fd, {
+                transformRequest: angular.identity
+                , headers: {
+                    'Content-Type': undefined
+                }
+            }).then(function (response) {
+                if (response.data.result.length != 0) {
+                    var dataresult = encodeURIComponent(JSON.stringify(response.data.result));
+                    console.log(dataresult);
+                    $http.get("http://localhost:3000/api/materials/bulkcreatematerial?bulkdata=" + dataresult + "&totlen=0&access_token=metricmangement").then(function (response) {
+                        console.log(response.data);
+                    });
+                }
             });
-            }
-        });
-    };
+        };
 }]);
-
 })();
-
-
-
-
-
 (function () {
     'use strict';
-    angular.module('app.filetobeupload').controller('materialbulkupdatecontroller', ['$scope','$http', function($scope, $http){
-    
-    $scope.uploadFile = function(){
-        var file = $scope.myFile;
-        var uploadUrl = "http://localhost:8000/uploadfile/materialbulkupdate";
-        this.filedata =[];
-        var fd = new FormData();
-        fd.append('file', file);
-        $http.post(uploadUrl, fd, {
-            transformRequest: angular.identity,
-            headers: {'Content-Type': undefined}
-        }).then(function (response) {
-            if(response.data.result.length!=0){
-                
-                var dataresult = encodeURIComponent(JSON.stringify(response.data.result));
-                console.log(dataresult);
-
-            $http.get("http://localhost:3000/api/materials/bulkupdatematerial?bulkdata="+dataresult+"&totlen=0&access_token=metricmangement").then(function (response) {
-                console.log(response.data);
+    angular.module('app.filetobeupload').controller('materialbulkupdatecontroller', ['$scope', '$http', function ($scope, $http) {
+        $scope.uploadFile = function () {
+            var file = $scope.myFile;
+            var uploadUrl = "http://localhost:8000/uploadfile/materialbulkupdate";
+            this.filedata = [];
+            var fd = new FormData();
+            fd.append('file', file);
+            $http.post(uploadUrl, fd, {
+                transformRequest: angular.identity
+                , headers: {
+                    'Content-Type': undefined
+                }
+            }).then(function (response) {
+                if (response.data.result.length != 0) {
+                    var dataresult = encodeURIComponent(JSON.stringify(response.data.result));
+                    console.log(dataresult);
+                    $http.get("http://localhost:3000/api/materials/bulkupdatematerial?bulkdata=" + dataresult + "&totlen=0&access_token=metricmangement").then(function (response) {
+                        console.log(response.data);
+                    });
+                }
             });
-            }
-        });
-    };
+        };
 }]);
-
 })();
-
-
-
-
 /**=========================================================
  * Module: upload.js
  =========================================================*/
-
-
 (function () {
     'use strict';
     angular.module('app.forms').controller('FileUploadController', FileUploadController);
     FileUploadController.$inject = ['FileUploader'];
-    
+
     function FileUploadController(FileUploader) {
         var vm = this;
         activate();
         ////////////////
-               
         function activate() {
             var uploader = vm.uploader = new FileUploader({
                 url: 'upload.php'
-            });      
-            
+            });
             console.log(vm.uploader);
             // FILTERS
             uploader.filters.push({
@@ -8237,14 +8198,12 @@
                 , templateUrl: helper.basepath('mainpages/bulkform.html')
                 , controller: 'attributebulkinsertcontroller'
                 , controllerAs: 'bulk'
-            
             }).state('app.attributebulkupdate', {
                 url: '/attributebulkupdate'
                 , title: 'Attribute bulkinsert'
                 , templateUrl: helper.basepath('mainpages/bulkform.html')
                 , controller: 'attributebulkupdatecontroller'
                 , controllerAs: 'bulk'
-
             }).state('app.materialbulkinsert', {
                 url: '/materialbulkinsert'
                 , title: 'materialbulkinsert '
@@ -8257,15 +8216,13 @@
                 , templateUrl: helper.basepath('mainpages/bulkform.html')
                 , controller: 'materialbulkupdatecontroller'
                 , controllerAs: 'bulk'
-            })
-        
-            .state('app.material', {
+            }).state('app.material', {
                 url: '/material'
                 , title: 'material'
                 , templateUrl: helper.basepath('mainpages/material.html')
                 , controller: 'materialController'
                 , controllerAs: 'material'
-                , resolve: helper.resolveFor('datatables')
+                , resolve: helper.resolveFor('datatables', 'oitozero.ngSweetAlert')
             }).state('app.addmaterial', {
                 url: '/addmaterial'
                 , title: 'addmaterial'
@@ -8280,7 +8237,7 @@
                 , templateUrl: helper.basepath('mainpages/metrics.html')
                 , controller: 'metricsController'
                 , controllerAs: 'metrics'
-                , resolve: helper.resolveFor('datatables')
+                , resolve: helper.resolveFor('datatables', 'oitozero.ngSweetAlert')
             }).state('app.addmetrics', {
                 url: '/addmetrics'
                 , title: 'addmetrics'
@@ -8295,7 +8252,7 @@
                 , templateUrl: helper.basepath('mainpages/attribute.html')
                 , controller: 'attributeController'
                 , controllerAs: 'attribute'
-                , resolve: helper.resolveFor('datatables')
+                , resolve: helper.resolveFor('datatables', 'oitozero.ngSweetAlert')
             }).state('app.addattribute', {
                 url: '/addattribute'
                 , title: 'addattribute'
@@ -8304,6 +8261,21 @@
                 url: '/editattribute/:updateid'
                 , title: 'editattribute'
                 , templateUrl: helper.basepath('mainpages/attributeform.html')
+            }).state('app.user', {
+                url: '/user'
+                , title: 'user'
+                , templateUrl: helper.basepath('mainpages/user.html')
+                , controller: 'userController'
+                , controllerAs: 'user'
+                , resolve: helper.resolveFor('datatables', 'oitozero.ngSweetAlert')
+            }).state('app.adduser', {
+                url: '/adduser'
+                , title: 'adduser'
+                , templateUrl: helper.basepath('mainpages/adduser.html')
+            }).state('app.edituser', {
+                url: '/edituser/:updateid'
+                , title: 'edituser'
+                , templateUrl: helper.basepath('mainpages/adduser.html')
             }).state('app.addcategories', {
                 url: '/addcategories'
                 , title: 'addcategories'
@@ -8866,38 +8838,55 @@
         activate();
         ////////////////
         function activate() {
-
             vm.dtOptions = DTOptionsBuilder.newOptions().withPaginationType('full_numbers').withDOM('<"html5buttons"B>lTfgitp').withButtons([
                 {
                     extend: 'copy'
                     , className: 'btn-sm'
+                    , exportOptions: {
+                        columns: ':not(:last-child)'
+                    }
                 }
                 , {
                     extend: 'csv'
                     , className: 'btn-sm'
+                    , title: 'Attribute Management'
+                    , exportOptions: {
+                        columns: ':not(:last-child)'
+                    }
                 }
                 , {
                     extend: 'excel'
                     , className: 'btn-sm'
-                    , title: 'XLS-File'
+                    , title: 'Attribute Management'
+                    , exportOptions: {
+                        columns: ':not(:last-child)'
+                    }
                 }
                 , {
                     extend: 'pdf'
                     , className: 'btn-sm'
-                    , title: $('title').text()
+                    , title: 'Attribute Management'
+                    , exportOptions: {
+                        columns: ':not(:last-child)'
+                    }
                 }
                 , {
                     extend: 'print'
                     , className: 'btn-sm'
+                    , title: 'Attribute Management'
+                    , exportOptions: {
+                        columns: ':not(:last-child)'
+                    }
                 }
             ]);
-            vm.dtColumnDefs = [
-              DTColumnDefBuilder.newColumnDef(0)
-              , DTColumnDefBuilder.newColumnDef(1)
-              , DTColumnDefBuilder.newColumnDef(2)
-              , DTColumnDefBuilder.newColumnDef(3).notSortable()
-           ];
-            
+            /*
+             vm.dtColumnDefs = [
+                DTColumnDefBuilder.newColumnDef(0)
+                , DTColumnDefBuilder.newColumnDef(1)
+                , DTColumnDefBuilder.newColumnDef(2)
+                , DTColumnDefBuilder.newColumnDef(3).notSortable()
+             ];
+             */
         }
     }
 })();
@@ -9980,29 +9969,61 @@
         }
     }
 })();
-
-
 // validation for attributeController.........
 (function () {
     'use strict';
     angular.module('app.dashboard').controller('attributeController', attributeController);
 
-    function attributeController($scope, $http, $state, $location) {
+    function attributeController($scope, $http, $state, $location, SweetAlert) {
         var vm = this;
         vm.submitted = false;
         vm.attributegrandparent = 0;
         vm.addattribute = function () {
             $state.go("app.addattribute");
         };
-        vm.bulkadd =function(){ 
-          $state.go("app.attributebulkinsert");
+        vm.bulkadd = function () {
+            $state.go("app.attributebulkinsert");
         };
-        vm.bulkupdate =function(){ 
-          $state.go("app.attributebulkupdate");
+        vm.bulkupdate = function () {
+            $state.go("app.attributebulkupdate");
         };
         vm.editattribute = function (id) {
             $state.go("app.editattribute", {
                 'updateid': id
+            });
+        };
+        vm.deleterow = function (id) {
+            SweetAlert.swal({
+                title: 'Are you sure?'
+                , text: 'Your will not be able to recover this file!'
+                , type: 'warning'
+                , showCancelButton: true
+                , confirmButtonColor: '#DD6B55'
+                , confirmButtonText: 'Yes, delete it!'
+                , cancelButtonText: 'No, cancel plx!'
+                , closeOnConfirm: false
+                , closeOnCancel: false
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    $http.get("http://localhost:3000/api/attributes/deleteattribute?status=0&id=" + id + "&modifiedby=admin&access_token=metricmangement").then(function (response) {
+                        var index = -1;
+                        var comArr = eval(vm.productdata);
+                        for (var i = 0; i < comArr.length; i++) {
+                            if (comArr[i]._id === id) {
+                                index = i;
+                                break;
+                            }
+                        }
+                        if (index === -1) {
+                            alert("Something gone wrong");
+                        }
+                        vm.productdata.splice(index, 1);
+                        SweetAlert.swal('Deleted!', 'Your file has been deleted.', 'success');
+                    });
+                }
+                else {
+                    SweetAlert.swal('Cancelled', 'Your file is safe :)', 'error');
+                }
             });
         };
         vm.viewattribute = function () {
@@ -10011,8 +10032,27 @@
         activate();
         ////////////////
         function activate() {
+            vm.alerts = [];
+            console.log(localStorage.attraddsuccess);
+            if (localStorage.attraddsuccess == "1") {
+                vm.alerts.push({
+                    type: 'success'
+                    , msg: 'Successfully Added!'
+                });
+                localStorage.removeItem("attraddsuccess");
+            }
+            vm.closeAlert = function (index) {
+                vm.alerts.splice(index, 1);
+            };
+            $http.get("http://localhost:3000/api/attributes/listattributeroles?status=1&access_token=metricmangement").then(function (response) {
+                vm.rolesname = [];
+                var parsed = response.data[0];
+                parsed.forEach(function (element, index, array) {
+                    vm.rolesname[element.attributeroleid] = element.attributerole;
+                });
+                console.log(vm.rolesname);
+            });
             $http.get("http://localhost:3000/api/attributes/mainrole?status=1&access_token=metricmangement").then(function (response) {
-                console.log(response.data);
                 vm.mainroletypes = response.data[0];
             });
         }
@@ -10030,27 +10070,73 @@
 (function () {
     'use strict';
     angular.module('app.dashboard').controller('materialController', materialController);
-
-    function materialController($scope, $http, $state, $location) {
+    // materialController.$inject = ['SweetAlert'];
+    function materialController($scope, $http, $state, $location, SweetAlert) {
         var vm = this;
         vm.submitted = false;
         vm.addmaterial = function () {
             $state.go("app.addmaterial");
         };
-        vm.bulkadd =function(){ 
-          $state.go("app.materialbulkinsert");
+        vm.bulkadd = function () {
+            $state.go("app.materialbulkinsert");
         };
-        vm.bulkupdate =function(){ 
-          $state.go("app.materialbulkupdate");
+        vm.bulkupdate = function () {
+            $state.go("app.materialbulkupdate");
         };
         vm.editmaterial = function (id) {
             $state.go("app.editmaterial", {
                 'updateid': id
             });
         };
+        vm.deleterow = function (id) {
+            SweetAlert.swal({
+                title: 'Are you sure?'
+                , text: 'Your will not be able to recover this file!'
+                , type: 'warning'
+                , showCancelButton: true
+                , confirmButtonColor: '#DD6B55'
+                , confirmButtonText: 'Yes, delete it!'
+                , cancelButtonText: 'No, cancel plx!'
+                , closeOnConfirm: false
+                , closeOnCancel: false
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    $http.get("http://localhost:3000/api/materials/deletematerial?status=0&id=" + id + "&modifiedby=admin&access_token=metricmangement").then(function (response) {
+                        var index = -1;
+                        var comArr = eval(vm.productdata);
+                        for (var i = 0; i < comArr.length; i++) {
+                            if (comArr[i]._id === id) {
+                                index = i;
+                                break;
+                            }
+                        }
+                        if (index === -1) {
+                            alert("Something gone wrong");
+                        }
+                        vm.productdata.splice(index, 1);
+                        SweetAlert.swal('Deleted!', 'Your file has been deleted.', 'success');
+                    });
+                }
+                else {
+                    SweetAlert.swal('Cancelled', 'Your file is safe :)', 'error');
+                }
+            });
+        };
         activate();
 
         function activate() {
+            vm.alerts = [];
+            console.log(localStorage.matraddsuccess);
+            if (localStorage.matraddsuccess == "1") {
+                vm.alerts.push({
+                    type: 'success'
+                    , msg: 'Successfully Added!'
+                });
+                localStorage.removeItem("matraddsuccess");
+            }
+            vm.closeAlert = function (index) {
+                vm.alerts.splice(index, 1);
+            };
             $http.get("http://localhost:3000/api/materials/listmaterial?status=1&access_token=metricmangement").then(function (response) {
                 console.log(response.data[0]);
                 vm.productdata = response.data[0];
@@ -10063,7 +10149,7 @@
     'use strict';
     angular.module('app.dashboard').controller('metricsController', metricsController);
 
-    function metricsController($scope, $http, $state, $location) {
+    function metricsController($scope, $http, $state, $location, SweetAlert) {
         var vm = this;
         vm.submitted = false;
         vm.addmetrics = function () {
@@ -10074,9 +10160,55 @@
                 'updateid': id
             });
         };
+        vm.deleterow = function (id) {
+            SweetAlert.swal({
+                title: 'Are you sure?'
+                , text: 'Your will not be able to recover this file!'
+                , type: 'warning'
+                , showCancelButton: true
+                , confirmButtonColor: '#DD6B55'
+                , confirmButtonText: 'Yes, delete it!'
+                , cancelButtonText: 'No, cancel plx!'
+                , closeOnConfirm: false
+                , closeOnCancel: false
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    $http.get("http://localhost:3000/api/metrics/deletemetric?status=0&id=" + id + "&modifiedby=admin&access_token=metricmangement").then(function (response) {
+                        var index = -1;
+                        var comArr = eval(vm.productdata);
+                        for (var i = 0; i < comArr.length; i++) {
+                            if (comArr[i]._id === id) {
+                                index = i;
+                                break;
+                            }
+                        }
+                        if (index === -1) {
+                            alert("Something gone wrong");
+                        }
+                        vm.productdata.splice(index, 1);
+                        SweetAlert.swal('Deleted!', 'Your file has been deleted.', 'success');
+                    });
+                }
+                else {
+                    SweetAlert.swal('Cancelled', 'Your file is safe :)', 'error');
+                }
+            });
+        };
         activate();
 
         function activate() {
+            vm.alerts = [];
+            console.log(localStorage.metricaddsuccess);
+            if (localStorage.metricaddsuccess == "1") {
+                vm.alerts.push({
+                    type: 'success'
+                    , msg: 'Successfully Added!'
+                });
+                localStorage.removeItem("metricaddsuccess");
+            }
+            vm.closeAlert = function (index) {
+                vm.alerts.splice(index, 1);
+            };
             $http.get("http://localhost:3000/api/metrics/listmetric?status=1&access_token=metricmangement").then(function (response) {
                 console.log(response.data[0]);
                 vm.productdata = response.data[0];
@@ -10121,13 +10253,15 @@
                 console.log('Submitted!!');
                 if (vm.updateid == undefined) {
                     $http.get("http://localhost:3000/api/materials/creatematerial?materialname=" + vm.name + "&category=" + vm.category + "&defaultmetric=" + vm.defaultmetrics + "&modifiedon=" + vm.modifyon + "&modifiedby=" + vm.modifyby + "&activestatus=" + vm.activestatus + "&status=1&access_token=metricmangement").then(function (response) {
-                        console.log(response.data);
+                        console.log(response.data[0]);
+                        localStorage.setItem("matraddsuccess", "1");
                         $state.go("app.material");
                     });
                 }
                 else {
                     $http.get("http://localhost:3000/api/materials/updatematerial?materialname=" + vm.name + "&category=" + vm.category + "&defaultmetric=" + vm.defaultmetrics + "&modifiedon=" + vm.modifyon + "&modifiedby=" + vm.modifyby + "&activestatus=" + vm.activestatus + "&id=" + vm.updateid + "&access_token=metricmangement").then(function (response) {
-                        console.log(response.data);
+                        console.log(response.data[0]);
+                        localStorage.setItem("matraddsuccess", "1");
                         $state.go("app.material");
                     });
                 }
@@ -10139,7 +10273,12 @@
         };
         activate();
         ////////////////
-        function activate() {}
+        function activate() {
+            $http.get("http://localhost:3000/api/metrics/listmetric?status=1&access_token=metricmangement").then(function (response) {
+                console.log(response.data[0]);
+                vm.optndefaultmetrics = response.data[0];
+            });
+        }
     }
 })();
 // addmetricsController validations....
@@ -10180,13 +10319,15 @@
                 console.log('Submitted!!');
                 if (vm.updateid == undefined) {
                     $http.get("http://localhost:3000/api/metrics/createmetric?name=" + vm.name + "&symbol=" + vm.symbol + "&baseunit=" + vm.baseunit + "&multiple=" + vm.multiple + "&modifiedon=" + vm.modifyon + "&modifiedby=" + vm.modifyby + "&activestatus=" + vm.activestatus + "&status=1&access_token=metricmangement").then(function (response) {
-                        console.log(response.data);
+                        console.log(response.data[0]);
+                        localStorage.setItem("metricaddsuccess", "1");
                         $state.go("app.metrics");
                     });
                 }
                 else {
                     $http.get("http://localhost:3000/api/metrics/updatemetric?name=" + vm.name + "&symbol=" + vm.symbol + "&baseunit=" + vm.baseunit + "&multiple=" + vm.multiple + "&modifiedon=" + vm.modifyon + "&modifiedby=" + vm.modifyby + "&activestatus=" + vm.activestatus + "&id=" + vm.updateid + "&access_token=metricmangement").then(function (response) {
-                        console.log(response.data);
+                        console.log(response.data[0]);
+                        localStorage.setItem("metricaddsuccess", "1");
                         $state.go("app.metrics");
                     });
                 }
@@ -10215,6 +10356,8 @@
         };
         vm.producttitle = "Attribute Management";
         vm.disabled = '';
+        vm.attrgrd = false;
+        vm.attrprt = false;
         vm.modifyby = "admin";
         vm.modifyon = "current date";
         vm.updateid = $state.params.updateid;
@@ -10222,6 +10365,8 @@
             vm.disabled = 'disabled="disabled"';
             vm.producttitle = "Update Attribute Management";
             $http.get("http://localhost:3000/api/attributes/listattributeone?id=" + vm.updateid + "&access_token=metricmangement").then(function (response) {
+                vm.attrgrd = true;
+                vm.attrprt = true;
                 vm.setdata = response.data[0];
                 vm.attributegrandparent = vm.setdata[0].attributegrandparent;
                 vm.attributeparent = vm.setdata[0].attributeparent;
@@ -10237,14 +10382,146 @@
                 console.log('Submitted!!');
                 if (vm.updateid == undefined) {
                     $http.get("http://localhost:3000/api/attributes/createattribute?attributegrandparent=" + vm.attributegrandparent + "&attributerole=" + vm.attributerole + "&attributeparent=" + vm.attributeparent + "&modifiedon=" + vm.modifyon + "&modifiedby=" + vm.modifyby + "&activestatus=" + vm.activestatus + "&status=1&access_token=metricmangement").then(function (response) {
-                        console.log(response.data);
+                        console.log(response.data[0]);
+                        localStorage.setItem("attraddsuccess", "1");
                         $state.go("app.attribute");
                     });
                 }
                 else {
                     $http.get("http://localhost:3000/api/attributes/updateattribute?attributegrandparent=" + vm.attributegrandparent + "&attributerole=" + vm.attributerole + "&attributeparent=" + vm.attributeparent + "&modifiedon=" + vm.modifyon + "&modifiedby=" + vm.modifyby + "&activestatus=" + vm.activestatus + "&id=" + vm.updateid + "&access_token=metricmangement").then(function (response) {
-                        console.log(response.data);
+                        console.log(response.data[0]);
+                        localStorage.setItem("attraddsuccess", "1");
                         $state.go("app.attribute");
+                    });
+                }
+            }
+            else {
+                console.log('Not valid!!');
+                return false;
+            }
+        };
+        activate();
+        ////////////////
+        function activate() {
+            $http.get("http://localhost:3000/api/attributes/mainrole?status=1&access_token=metricmangement").then(function (response) {
+                console.log(response.data);
+                vm.mainroletypes = response.data[0];
+            });
+            $http.get("http://localhost:3000/api/attributes/subrole?status=1&access_token=metricmangement").then(function (response) {
+                console.log(response.data);
+                vm.subroletypes = response.data[0];
+            });
+        }
+    }
+})();
+(function () {
+    'use strict';
+    angular.module('app.dashboard').controller('userController', userController);
+
+    function userController($scope, $http, $state, $location, SweetAlert) {
+        var vm = this;
+        vm.submitted = false;
+        vm.adduser = function () {
+            $state.go("app.adduser");
+        };
+        vm.edituser = function (id) {
+            $state.go("app.edituser", {
+                'updateid': id
+            });
+        };
+        vm.deleterow = function (id) {
+            SweetAlert.swal({
+                title: 'Are you sure?'
+                , text: 'Your will not be able to recover this file!'
+                , type: 'warning'
+                , showCancelButton: true
+                , confirmButtonColor: '#DD6B55'
+                , confirmButtonText: 'Yes, delete it!'
+                , cancelButtonText: 'No, cancel plx!'
+                , closeOnConfirm: false
+                , closeOnCancel: false
+            }, function (isConfirm) {
+                if (isConfirm) {
+                    $http.get("http://localhost:3000/api/user/deleteuser?status=0&id=" + id + "&modifiedby=admin&access_token=metricmangement").then(function (response) {
+                        var index = -1;
+                        var comArr = eval(vm.productdata);
+                        for (var i = 0; i < comArr.length; i++) {
+                            if (comArr[i]._id === id) {
+                                index = i;
+                                break;
+                            }
+                        }
+                        if (index === -1) {
+                            alert("Something gone wrong");
+                        }
+                        vm.productdata.splice(index, 1);
+                        SweetAlert.swal('Deleted!', 'Your file has been deleted.', 'success');
+                    });
+                }
+                else {
+                    SweetAlert.swal('Cancelled', 'Your file is safe :)', 'error');
+                }
+            });
+        };
+        activate();
+
+        function activate() {
+            $http.get("http://localhost:3000/api/user/listuser?status=1&access_token=metricmangement").then(function (response) {
+                console.log(response.data[0]);
+                vm.productdata = response.data[0];
+            });
+        }
+    }
+})();
+// addmetricsController validations....
+(function () {
+    'use strict';
+    angular.module('app.forms').controller('adduserController', adduserController);
+
+    function adduserController($scope, $http, $state, $location) {
+        var vm = this;
+        vm.submitted = false;
+        vm.validateInput = function (name, type) {
+            var input = vm.formValidate[name];
+            return (input.$dirty || vm.submitted) && input.$error[type];
+        };
+        vm.producttitle = "UserManagement";
+        vm.modifyby = "admin";
+        vm.modifyon = "current date";
+        vm.disabled = '';
+        vm.updateid = $state.params.updateid;
+        if (vm.updateid != undefined) {
+            vm.disabled = 'disabled="disabled"';
+            vm.producttitle = "Update UserManagement";
+            $http.get("http://localhost:3000/api/metrics/listmetricone?id=" + vm.updateid + "&access_token=metricmangement").then(function (response) {
+                vm.setdata = response.data[0];
+                console.log(vm.setdata);
+                vm.firstname = vm.setdata[0].firstname;
+                vm.lastname = vm.setdata[0].lastname;
+                vm.mobile = vm.setdata[0].mobile;
+                vm.email = vm.setdata[0].email;
+                vm.password = vm.setdata[0].password;
+                vm.confirmpassword = vm.setdata[0].confirmpassword;
+                vm.pin = vm.setdata[0].pin;
+                vm.activestatus = vm.setdata[0].activestatus;
+            });
+        }
+        console.log(vm.updateid);
+        // Submit form
+        vm.submitForm = function () {
+            vm.submitted = true;
+            if (vm.formValidate.$valid) {
+                console.log('Submitted!!');
+                if (vm.updateid == undefined) {
+                    $http.get("http://localhost:3000/api/metrics/createmetric?firstname=" + vm.firstname + "&lastname=" + vm.lastname + "&mobile=" + vm.mobile + "&email=" + vm.email + "&password=" + vm.password + "&confirmpassword=" + vm.confirmpassword + "&pin=" + vm.pin + "&activestatus=" + vm.activestatus + "&status=1&access_token=metricmangement").then(function (response) {
+                        console.log(response.data);
+                        $state.go("app.user");
+                    });
+                }
+                else {
+                    $http.get("http://localhost:3000/api/metrics/updatemetric?firstname=" + vm.firstname + "&lastname=" + vm.lastname + "&mobile=" + vm.mobile + "&email=" + vm.email + "&password=" + vm.password + "&confirmpassword=" + vm.confirmpassword + "&pin=" + vm.pin + "&activestatus=" + vm.activestatus + "&status=1&access_token=metricmangement").then(function (response) {
+                        console.log(response.data);
+                        $state.go("app.user");
                     });
                 }
             }
@@ -10258,8 +10535,3 @@
         function activate() {}
     }
 })();
-
-
-
-
-

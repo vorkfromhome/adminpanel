@@ -338,6 +338,26 @@
             , {
                 "template": {
                     "method": "GET"
+                    , "url": "http://localhost:8000/attribute/listattributeroles"
+                    , "headers": {
+                        "accepts": "application/json"
+                        , "content-type": "application/json"
+                    }
+                    , "query": {
+                        "status": "{status}"
+                        , "sensor": "{sensor=false}"
+                    }
+                    , "responsePath": "$.result"
+                }
+                , "functions": {
+                    "listattributeroles": [
+            "status"
+          ]
+                }
+      }
+            ,{
+                "template": {
+                    "method": "GET"
                     , "url": "http://localhost:8000/attribute/listattributeone"
                     , "headers": {
                         "accepts": "application/json"
@@ -516,6 +536,155 @@
             , "modifiedby"
             , "activestatus"
             , "id"
+          ]
+                }
+      }
+    ]
+    }
+    , "usermanagement": {
+        "name": "usermanagement"
+        , "connector": "rest"
+        , "debug": "false"
+        , "operations": [
+            {
+                "template": {
+                    "method": "GET"
+                    , "url": "http://localhost:8000/user/listuser"
+                    , "headers": {
+                        "accepts": "application/json"
+                        , "content-type": "application/json"
+                    }
+
+                    , "query": {
+                        "status": "{status}"
+                        , "sensor": "{sensor=false}"
+                    }
+                    , "responsePath": "$.result"
+                }
+                , "functions": {
+                    "listuser": [
+            "status"
+          ]
+                }
+      }
+            , {
+                "template": {
+                    "method": "GET"
+                    , "url": "http://localhost:8000/user/listuserone"
+                    , "headers": {
+                        "accepts": "application/json"
+                        , "content-type": "application/json"
+                    }
+                    , "query": {
+                        "id": "{id}"
+                        , "sensor": "{sensor=false}"
+                    }
+                    , "responsePath": "$.result"
+                }
+                , "functions": {
+                    "listuserone": [
+            "id"
+          ]
+                }
+      }
+            , {
+                "template": {
+                    "method": "GET"
+                    , "url": "http://localhost:8000/user/deleteuser"
+                    , "headers": {
+                        "accepts": "application/json"
+                        , "content-type": "application/json"
+                    }
+                    , "query": {
+                        "id": "{id}"
+                        , "status": "{status}"
+                        , "modifiedby": "{modifiedby}"
+                        , "sensor": "{sensor=false}"
+                    }
+                    , "responsePath": "$.result"
+                }
+                , "functions": {
+                    "deleteuser": [
+            "status"
+            , "id"
+            , "modifiedby"
+          ]
+                }
+      }
+            , {
+                "template": {
+                    "method": "GET"
+                    , "url": "http://localhost:8000/user/createuser"
+                    , "headers": {
+                        "accepts": "application/json"
+                        , "content-type": "application/json"
+                    }
+                    , "query": {
+                        "firstname": "{firstname}"
+                        , "lastname": "{lastname}"
+                        , "mobile": "{mobile}"
+                        , "email": "{email}"
+                        , "password": "{password}"
+                        , "modifyon": "{modifyon}"
+                        , "modifyby": "{modifyby}"
+                        , "pin": "{pin}"
+                        , "activestatus": "{activestatus}"
+                        , "status": "{status}"
+                        , "sensor": "{sensor=false}"
+                    }
+                    , "responsePath": "$.result"
+                }
+                , "functions": {
+                    "createuser": [
+                        
+              "firstname"
+            , "lastname"
+            , "mobile"
+            , "email"
+            , "password"
+            , "modifyon"
+            , "modifyby"
+            , "pin"
+            , "activestatus"
+            , "status"
+          ]
+                }
+      }
+            , {
+                "template": {
+                    "method": "GET"
+                    , "url": "http://localhost:8000/user/updateuser"
+                    , "headers": {
+                        "accepts": "application/json"
+                        , "content-type": "application/json"
+                    }
+                    , "query": {
+                        "firstname": "{firstname}"
+                        , "lastname": "{lastname}"
+                        , "mobile": "{mobile}"
+                        , "email": "{email}"
+                        , "password": "{password}"
+                        , "modifyon": "{modifyon}"
+                        , "modifyby": "{modifyby}"
+                        , "pin": "{pin}"
+                        , "activestatus": "{activestatus}"
+                        , "status": "{status}"
+                        , "sensor": "{sensor=false}"
+                    }
+                    , "responsePath": "$.result"
+                }
+                , "functions": {
+                    "updateuser": [
+              "firstname"
+            , "lastname"
+            , "mobile"
+            , "email"
+            , "password"
+            , "modifyon"
+            , "modifyby
+            , "pin"
+            , "activestatus"
+            , "status"
           ]
                 }
       }

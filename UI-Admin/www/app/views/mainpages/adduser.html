@@ -1,0 +1,123 @@
+<div class="block-center mt-xl wd-xl">
+    <!-- START panel-->
+    <div class="panel panel-dark panel-flat" ng-controller="adduserController as form">
+        <div class="panel-heading text-center">
+            <h3>{{form.producttitle}}</h3> </div>   
+        <div class="panel-body">
+            <div class="col-lg-12">
+                <div>
+                    <form class="form-validate form-horizontal" name="form.formValidate" ng-submit="form.submitForm()" novalidate=" ">
+                                                
+                     <!-- firstname -->
+                    <div class="col-xs-12">
+                            <div class="form-group" ng-class="{ 'has-error' : form.validateInput('firstname', 'required')}">
+                                <label>first name</label>
+                                <input type="text" name="firstname" class="form-control inputborder" placeholder="Enter Your firstname" ng-model="form.firstname" ng-pattern="/[A-Za-z]$/" required />
+                                <p ng-show="form.validateInput('firstname', 'required')" class="help-block">This field is required.</p>
+                                <p ng-show="form.validateInput('firstname', 'pattern')" class="help-block">This field must contain only charector</p>
+                            </div>
+                        </div>
+                        
+                            <!-- lastname -->
+                             <div class="col-xs-12">
+                            <div class="form-group" ng-class="{ 'has-error' : form.validateInput('lastname', 'required')}">
+                                <label>last name</label>
+                                <input type="text" name="lastname" class="form-control inputborder" placeholder="Enter Your lastname" ng-model="form.lastname" ng-pattern="/[A-Za-z]$/" required />
+                                <p ng-show="form.validateInput('lastname', 'required')" class="help-block">This field is required.</p>
+                                <p ng-show="form.validateInput('lastname', 'pattern')" class="help-block">This field must contain only charector</p>
+                            </div>
+                        </div>
+                        
+                        
+                       <!-- mobile -->
+                         <div class="col-xs-12">
+                            <div class="form-group" ng-class="{ 'has-error' : form.validateInput('mobile', 'required')}">
+                                <label>mobile</label>
+                                <input type="text" name="mobile" class="form-control inputborder" placeholder="Enter Your mobile" ng-model="form.mobile"ng-maxlength="10"  ng-minlength="10" ng-pattern="/[0-9]$/" required />
+                                <p ng-show="form.validateInput('mobile', 'required')" class="help-block">This field is required.</p>
+                                <p ng-show="form.validateInput('mobile', 'pattern')" class="help-block">This field must contain only number</p>
+                            </div>
+                        </div>
+                        
+                        
+                        
+                        
+                        
+                        
+                       
+                        
+                   <!-- email -->
+                         <div class="col-xs-12">
+                            <div class="form-group" ng-class="{ 'has-error' : form.validateInput('email', 'required')}">
+                                <label>email</label>
+                                <input type="text" name="email" class="form-control inputborder" placeholder="Enter Your email" ng-model="form.email" ng-pattern='/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/' required />
+                                <p ng-show="form.validateInput('email', 'required')" class="help-block">This field is required.</p>
+                                <p ng-show="form.validateInput('email', 'pattern')" class="help-block">This field must contain only charector</p>
+                                
+                            
+                            </div>
+                        </div>
+                        
+                    <!-- password -->
+                        <div class="col-xs-12">
+                            <div class="form-group" ng-class="{ 'has-error' : form.validateInput('password', 'required')}">
+                                <label>password</label>
+                                <input type="password" name="password" class="form-control inputborder" placeholder="Enter Your password" ng-model="form.password" ng-pattern="/[A-Za-z]$/" required />
+                                <p ng-show="form.validateInput('password', 'required')" class="help-block">This field is required.</p>
+                                <p ng-show="form.validateInput('password', 'pattern')" class="help-block">This field must contain only charector</p>
+                            </div>
+                        </div>
+                        
+         
+               
+                        
+                  <!-- Confirm password -->
+                            <div class="col-xs-12">
+                            <div class="form-group" ng-class="{ 'has-error' : form.validateInput('confirmpassword', 'required')}">
+                                <label>Confirm password</label>
+                                <input type="password" name="confirmpassword" class="form-control inputborder" placeholder="Confirm your password" ng-model="form.confirmpassword" ui-validate="'$value==form.password'" ui-validate-watch="'password'" required />
+                            <p ng-show="form.validateInput('confirmpassword', 'required')" class="help-block">This field is required.</p>
+                            <p ng-show="form.validateInput('confirmpassword', 'pattern')" class="help-block">This field must contain only charector</p>
+                                <span class="text-danger" ng-show="form.confirmpassword.$error.validator">Password does Not match</span>
+                            </div>
+                        </div>
+                        
+                        
+                        
+                                                
+                            <!-- pin -->
+                        <div class="col-xs-12">
+                            <div class="form-group" ng-class="{ 'has-error' : form.validateInput('pin', 'required')}">
+                                <label>pin</label>
+                                <input type="text" name="pin" class="form-control inputborder" placeholder="Enter Your pin" ng-model="form.pin" ng-pattern="/[A-Za-z]$/" required />
+                                <p ng-show="form.validateInput('pin', 'required')" class="help-block">This field is required.</p>
+                                <p ng-show="form.validateInput('pin', 'pattern')" class="help-block">This field must contain only charector</p>
+                            </div>
+                        </div>
+                        
+    <!-- Status --> 	
+		<div class="col-xs-12">
+          <div class="form-group"  ng-class="{ 'has-error' : form.validateInput('activestatus', 'required')}">
+            <label>Status</label>
+            <select class="form-control inputborder" name="activestatus" ng-model="form.activestatus" required >
+                <option value="">Select status</option>
+              <option value="1">Active</option>
+              <option value="0">InActive</option>
+              <option value="-1">Deleted</option>
+            </select>
+			<p ng-show="form.validateInput('activestatus', 'required')" class="help-block">This field is required.</p>
+          </div>
+		  </div>
+                        <div class="col-xs-6 text-right">
+                            <button class="btn btn-success" type="submit"><strong>Save</strong></button>
+                        </div>
+                        <div class="col-xs-6 text-right">
+                            <button class="btn btn-danger"><strong>cancel</strong></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- END panel-->
+    </div>
+</div>

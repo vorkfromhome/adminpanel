@@ -34,7 +34,7 @@
                                 <td>{{x.activestatus == "1" ? "Active" : x.activestatus == "0" ? "Inactive" : "Deleted"}}</td>
                                 <td>
                                     <button class="btn btn-sm btn-warning" type="button" ng-click="metrics.editmetrics(x._id)"> <em class="fa fa-edit"></em> </button>
-                                    <button class="btn btn-sm btn-danger" type="button" ng-click="metrics.editmetrics(x._id)"> <em class="fa fa-trash-o"></em> </button>
+                                    <button class="btn btn-sm btn-danger" type="button" ng-click="metrics.deleterow(x._id)"> <em class="fa fa-trash-o"></em> </button>
                                 </td>
                             </tr>
                         </tbody>

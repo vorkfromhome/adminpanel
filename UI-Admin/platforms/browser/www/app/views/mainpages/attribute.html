@@ -4,7 +4,7 @@
             <div class="input-group">
                 <select class="form-control" name="attributegrandparent" ng-model="attribute.attributegrandparent" required>
                     <option value="0">No Grandparent</option>
-                    <option ng-repeat="x in attribute.mainroletypes">{{x.attributerole}}</option>
+                    <option ng-repeat="x in attribute.mainroletypes" value="{{x.attributeroleid}}">{{x.attributerole}}</option>
                 </select> <span class="input-group-btn">
     <button class="btn btn-info" type="button" ng-click="attribute.viewattribute()">View</button>
   </span> </div>
@@ -36,13 +36,13 @@
                     <tbody>
                         <tr ng-repeat="x in attribute.productdata">
                             <td>{{x.attributerole}}</td>
-                            <td>{{x.attributeparent}}-{{x.attributegrandparent}}</td>
+                            <td>{{attribute.rolesname[x.attributeparent]}} {{x.attributeparent == "0" ? "" : "-"}} {{attribute.rolesname[x.attributegrandparent]}}</td>
                             <td>{{x.modifiedon}}</td>
                             <td>{{x.modifiedby}}</td>
                             <td>{{x.activestatus == "1" ? "Active" : x.activestatus == "0" ? "Inactive" : "Deleted"}}</td>
                             <td>
                                 <button class="btn btn-sm btn-warning" type="button" ng-click="attribute.editattribute(x._id)"> <em class="fa fa-edit"></em> </button>
-                                <button class="btn btn-sm btn-danger" type="button" ng-click="attribute.editattribute(x._id)"> <em class="fa fa-trash-o"></em> </button>
+                                <button class="btn btn-sm btn-danger" type="button" ng-click="attribute.deleterow(x._id)"> <em class="fa fa-trash-o"></em> </button>
                             </td>
                         </tr>
                     </tbody>
