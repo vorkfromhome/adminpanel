@@ -30,7 +30,7 @@
                         </div>
                         <div class="col-xs-12">
                             <div class="form-group" ng-class="{ 'has-error' : form.validateInput('defaultmetrics', 'required')}">
-                                <label>Defaultmetrics</label>
+                                <label>Default Metrics</label>
                                 <select class="form-control inputborder" name="defaultmetrics" ng-model="form.defaultmetrics" required>
                                     <option value=""></option>
                                     <option ng-repeat="x in form.optndefaultmetrics" value="{{x.name}}">{{x.name}}</option>
@@ -55,7 +55,7 @@
                             <button class="btn btn-success" type="submit"><strong>Save</strong></button>
                         </div>
                         <div class="col-xs-6 text-right">
-                            <button class="btn btn-danger"><strong>cancel</strong></button>
+                            <button class="btn btn-danger"><strong>Cancel</strong></button>
                         </div>
                     </form>
                 </div>

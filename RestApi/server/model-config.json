@@ -49,5 +49,9 @@
   "metric": {
     "dataSource": "metricmanagement",
     "public": true
+  },
+  "usermanagement": {
+    "dataSource": "usermanagement",
+    "public": true
   }
 }

@@ -19,7 +19,7 @@
                         <div class="col-xs-12">
                             <!-- Product information -->
                             <div class="form-group" ng-class="{ 'has-error' : form.validateInput('symbol', 'required')}">
-                                <label>symbol</label>
+                                <label>Symbol</label>
                                 <input type="text" name="symbol" class="form-control inputborder" placeholder="Enter Your name" ng-model="form.symbol" ng-pattern="/[A-Za-z]$/" required />
                                 <p ng-show="form.validateInput('symbol', 'required')" class="help-block">This field is required.</p>
                                 <p ng-show="form.validateInput('symbol', 'pattern')" class="help-block">This field must contain only charector</p>
@@ -62,7 +62,7 @@
                             <button class="btn btn-success" type="submit"><strong>Save</strong></button>
                         </div>
                         <div class="col-xs-6 text-right">
-                            <button class="btn btn-danger"><strong>cancel</strong></button>
+                            <button class="btn btn-danger"><strong>Cancel</strong></button>
                         </div>
                     </form>
                 </div>

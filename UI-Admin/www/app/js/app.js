@@ -10442,7 +10442,7 @@
                 , closeOnCancel: false
             }, function (isConfirm) {
                 if (isConfirm) {
-                    $http.get("http://localhost:3000/api/user/deleteuser?status=0&id=" + id + "&modifiedby=admin&access_token=metricmangement").then(function (response) {
+                    $http.get("http://localhost:3000/api/usermanagements/deleteuser?status=0&id=" + id + "&modifiedby=admin&access_token=metricmangement").then(function (response) {
                         var index = -1;
                         var comArr = eval(vm.productdata);
                         for (var i = 0; i < comArr.length; i++) {
@@ -10466,7 +10466,21 @@
         activate();
 
         function activate() {
-            $http.get("http://localhost:3000/api/user/listuser?status=1&access_token=metricmangement").then(function (response) {
+            vm.alerts = [];
+            console.log(localStorage.useraddsuccess);
+            if (localStorage.useraddsuccess == "1") {
+                vm.alerts.push({
+                    type: 'success'
+                    , msg: 'Successfully Added!'
+                });
+                localStorage.removeItem("useraddsuccess");
+            }
+            vm.closeAlert = function (index) {
+                vm.alerts.splice(index, 1);
+            };
+            
+            
+            $http.get("http://localhost:3000/api/usermanagements/listuser?status=1&access_token=metricmangement").then(function (response) {
                 console.log(response.data[0]);
                 vm.productdata = response.data[0];
             });
@@ -10493,7 +10507,7 @@
         if (vm.updateid != undefined) {
             vm.disabled = 'disabled="disabled"';
             vm.producttitle = "Update UserManagement";
-            $http.get("http://localhost:3000/api/metrics/listmetricone?id=" + vm.updateid + "&access_token=metricmangement").then(function (response) {
+            $http.get("http://localhost:3000/api/usermanagements/listuserone?id=" + vm.updateid + "&access_token=metricmangement").then(function (response) {
                 vm.setdata = response.data[0];
                 console.log(vm.setdata);
                 vm.firstname = vm.setdata[0].firstname;
@@ -10513,14 +10527,18 @@
             if (vm.formValidate.$valid) {
                 console.log('Submitted!!');
                 if (vm.updateid == undefined) {
-                    $http.get("http://localhost:3000/api/metrics/createmetric?firstname=" + vm.firstname + "&lastname=" + vm.lastname + "&mobile=" + vm.mobile + "&email=" + vm.email + "&password=" + vm.password + "&confirmpassword=" + vm.confirmpassword + "&pin=" + vm.pin + "&activestatus=" + vm.activestatus + "&status=1&access_token=metricmangement").then(function (response) {
+               
+                    $http.get("http://localhost:3000/api/usermanagements/createuser?firstname=" + vm.firstname + "&lastname=" + vm.lastname + "&mobile=" + vm.mobile + "&email=" + vm.email + "&password=" + vm.password + "&pin=" + vm.pin + "&activestatus=" + vm.activestatus + "&modifiedon=" + vm.modifyon + "&modifiedby=" + vm.modifyby + "&status=1&access_token=metricmangement").then(function (response) {
                         console.log(response.data);
+                        localStorage.setItem("useraddsuccess", "1");
                         $state.go("app.user");
                     });
                 }
                 else {
-                    $http.get("http://localhost:3000/api/metrics/updatemetric?firstname=" + vm.firstname + "&lastname=" + vm.lastname + "&mobile=" + vm.mobile + "&email=" + vm.email + "&password=" + vm.password + "&confirmpassword=" + vm.confirmpassword + "&pin=" + vm.pin + "&activestatus=" + vm.activestatus + "&status=1&access_token=metricmangement").then(function (response) {
+             
+                    $http.get("http://localhost:3000/api/usermanagements/updateuser?firstname=" + vm.firstname + "&lastname=" + vm.lastname + "&mobile=" + vm.mobile + "&email=" + vm.email + "&password=" + vm.password + "&pin=" + vm.pin + "&activestatus=" + vm.activestatus + "&modifiedon=" + vm.modifyon + "&modifiedby=" + vm.modifyby + "&id=" + vm.updateid +  "&status=1&access_token=metricmangement").then(function (response) {
                         console.log(response.data);
+                        localStorage.setItem("useraddsuccess", "1");
                         $state.go("app.user");
                     });
                 }

@@ -48,9 +48,9 @@
           <div class="form-group"  ng-class="{ 'has-error' : form.validateInput('activestatus', 'required')}">
             <label>Status</label>
             <select class="form-control inputborder" name="activestatus" ng-model="form.activestatus" required >
-                <option value="">Select status</option>
+                <option value="">Select Status</option>
               <option value="1">Active</option>
-              <option value="0">InActive</option>
+              <option value="0">In Active</option>
               <option value="-1">Deleted</option>
             </select>
 			<p ng-show="form.validateInput('activestatus', 'required')" class="help-block">This field is required.</p>
@@ -62,9 +62,7 @@
 		<button class="btn btn-success" type="submit"><strong>Save</strong></button>
     </div>
 <div class="col-xs-6 text-right">
-         <button class="btn btn-danger"><strong>cancel</strong></button>
-			</div>
-       </button>
+         <button class="btn btn-danger"><strong>Cancel</strong></button>
 			</div>
       </form>
     </div>
